@@ -20,12 +20,12 @@ function love.load()
 		["bg_plx-5"] = love.graphics.newImage("assets/graphics/plx-5.png"),
 	}
 
-	_G.glayerBg = {
-		{ img = gTextures["bg_plx-1"] },
-		{ img = gTextures["bg_plx-2"] },
-		{ img = gTextures["bg_plx-3"] },
-		{ img = gTextures["bg_plx-4"] },
-		{ img = gTextures["bg_plx-5"] },
+	_G.gLayerBg = {
+		{ img = gTextures["bg_plx-1"], speed = 0, scroll = 0 },
+		{ img = gTextures["bg_plx-2"], speed = 10, scroll = 0 },
+		{ img = gTextures["bg_plx-3"], speed = 20, scroll = 0 },
+		{ img = gTextures["bg_plx-4"], speed = 30, scroll = 0 },
+		{ img = gTextures["bg_plx-5"], speed = 40, scroll = 0 },
 	}
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -35,8 +35,6 @@ function love.load()
 		highdpi = true,
 		stretched = false,
 	})
-
-	_G.cam = camera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, { x = 0, y = 0, resizable = true, maintainAspectRatio = true })
 
 	_G.gStateMachine = StateMachine({
 		["start"] = function()
@@ -50,12 +48,22 @@ function love.load()
 end
 
 function love.update(dt)
+	for _, layer in ipairs(gLayerBg) do
+		layer.scroll = (layer.scroll + layer.speed * dt) % BACKGROUND_LOOPING_POINT
+	end
+
 	gStateMachine:update(dt)
 	love.keyboard.keysPressed = {}
 end
 
 function love.draw()
 	push:apply("start")
+
+	for _, layer in ipairs(gLayerBg) do
+		for i = 0, 3 do
+			love.graphics.draw(layer.img, -layer.scroll + (i * layer.img:getWidth()), 0)
+		end
+	end
 
 	gStateMachine:render()
 

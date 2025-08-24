@@ -1,5 +1,4 @@
 _G.push = require("lib/push")
-_G.camera = require("lib/brady_camera")
 Class = require("lib/class")
 
 require("src/constants")

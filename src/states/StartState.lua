@@ -2,7 +2,7 @@ StartState = Class({ __includes = BaseState })
 
 function StartState:update(_)
 	if love.keyboard.wasPressed("space") then
-
+      gStateMachine:change("play")
 	end
 
 	if love.keyboard.wasPressed("escape") then

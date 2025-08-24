@@ -8,16 +8,21 @@ function BgPlx:init(state)
 	_G.gLayerBg = {
 		{ img = gTextures["bg_plx-1"], speed = 0, scroll = 0 },
 		{ img = gTextures["bg_plx-2"], speed = 10, scroll = 0 },
-		{ img = gTextures["bg_plx-3"], speed = 20, scroll = 0 },
-		{ img = gTextures["bg_plx-4"], speed = 30, scroll = 0 },
-		{ img = gTextures["bg_plx-5"], speed = 40, scroll = 0 },
+		{ img = gTextures["bg_plx-3"], speed = 30, scroll = 0 },
+		{ img = gTextures["bg_plx-4"], speed = 50, scroll = 0 },
+		{ img = gTextures["bg_plx-5"], speed = 100, scroll = 0 },
+		{ name = "ground", img = gTextures["ground"], speed = 100, scroll = 0 },
 	}
 end
 
 function BgPlx:update(dt)
 	if self.state == "play" then
 		for _, layer in ipairs(gLayerBg) do
-			layer.scroll = (layer.scroll + layer.speed * dt) % BACKGROUND_LOOPING_POINT
+      if layer.name == "ground" then
+        layer.scroll = (layer.scroll + layer.speed * dt) % GROUND_LOOPING_POINT
+      else
+        layer.scroll = (layer.scroll + layer.speed * dt) % BACKGROUND_LOOPING_POINT
+      end
 		end
 	end
 end
@@ -25,7 +30,11 @@ end
 function BgPlx:draw()
 	for _, layer in ipairs(gLayerBg) do
 		for i = 0, 3 do
-			love.graphics.draw(layer.img, -layer.scroll + (i * layer.img:getWidth()), 0)
+			love.graphics.draw(
+				layer.img,
+				-layer.scroll + (i * layer.img:getWidth()),
+				layer.name == "ground" and VIRTUAL_HEIGHT - 20 or 0
+			)
 		end
 	end
 end

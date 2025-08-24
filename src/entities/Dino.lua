@@ -1,23 +1,28 @@
 Dino = Class({})
 
 local GRAVITY = 20
-local GROUND = VIRTUAL_HEIGHT - 50
+local GROUND = VIRTUAL_HEIGHT - 80
+local SCALE = 3
 
 function Dino:init()
 	self.image = gTextures["player"]
 	self.quads = GenerateQuads(self.image, 24, 21)
-	self.width = self.image:getWidth()
-	self.height = self.image:getHeight()
+	self.width = 22 * SCALE
+	self.height = 19 * SCALE
 	self.isGround = false
 
 	self.animations = {
 		run = Animation({
 			frames = { 5, 6, 7, 8, 9 },
-			interval = 0.2,
+			interval = 0.1,
 		}),
 		jump = Animation({
 			frames = { 13 },
 			interval = 0.2,
+		}),
+		crouchRun = Animation({
+			frames = { 19, 20, 21, 22, 23 },
+			interval = 0.1,
 		}),
 	}
 	self.currentAnim = self.animations.run
@@ -35,21 +40,27 @@ function Dino:update(dt)
 
 	if love.keyboard.wasPressed("space") and self.isGround then
 		self.currentAnim = self.animations.jump
-		self.dy = -5
+		self.dy = -8
 	end
 
 	self.y = self.y + self.dy
-  self.isGround = false
+	self.isGround = false
 
 	if self.y >= GROUND then
-		self.currentAnim = self.animations.run
+		if love.keyboard.isDown("down") then
+			self.currentAnim = self.animations.crouchRun
+		else
+			self.currentAnim = self.animations.run
+		end
 		self.y = GROUND
 		self.isGround = true
 	end
 end
 
 function Dino:render()
-	love.graphics.draw(self.image, self.quads[self.currentAnim:getCurrentFrame()], self.x, self.y, nil, 2)
+	love.graphics.draw(self.image, self.quads[self.currentAnim:getCurrentFrame()], self.x, self.y, nil, SCALE)
+	-- debug collider
+	-- love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 
 function Dino:collides(entity)

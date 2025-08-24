@@ -6,7 +6,7 @@ function love.load()
 	love.window.setTitle("Dino")
 
 	_G.gFonts = {
-		["small"] = love.graphics.newFont("assets/fonts/alagard.ttf",8),
+		["small"] = love.graphics.newFont("assets/fonts/alagard.ttf", 8),
 		["medium"] = love.graphics.newFont("assets/fonts/alagard.ttf", 16),
 		["large"] = love.graphics.newFont("assets/fonts/alagard.ttf", 32),
 	}
@@ -18,15 +18,13 @@ function love.load()
 		["bg_plx-3"] = love.graphics.newImage("assets/graphics/plx-3.png"),
 		["bg_plx-4"] = love.graphics.newImage("assets/graphics/plx-4.png"),
 		["bg_plx-5"] = love.graphics.newImage("assets/graphics/plx-5.png"),
+		--
+		-- player
+		["player"] = love.graphics.newImage("assets/graphics/Dino.png"),
+		-- Objects
 	}
 
-	_G.gLayerBg = {
-		{ img = gTextures["bg_plx-1"], speed = 0, scroll = 0 },
-		{ img = gTextures["bg_plx-2"], speed = 10, scroll = 0 },
-		{ img = gTextures["bg_plx-3"], speed = 20, scroll = 0 },
-		{ img = gTextures["bg_plx-4"], speed = 30, scroll = 0 },
-		{ img = gTextures["bg_plx-5"], speed = 40, scroll = 0 },
-	}
+  _G.bg = BgPlx()
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
@@ -40,6 +38,9 @@ function love.load()
 		["start"] = function()
 			return StartState()
 		end,
+		["play"] = function()
+			return PlayState()
+		end,
 	})
 
 	gStateMachine:change("start")
@@ -48,35 +49,16 @@ function love.load()
 end
 
 function love.update(dt)
-	for _, layer in ipairs(gLayerBg) do
-		layer.scroll = (layer.scroll + layer.speed * dt) % BACKGROUND_LOOPING_POINT
-	end
-
+  bg:update(dt)
 	gStateMachine:update(dt)
 	love.keyboard.keysPressed = {}
 end
 
 function love.draw()
 	push:apply("start")
-
-	for _, layer in ipairs(gLayerBg) do
-		for i = 0, 3 do
-			love.graphics.draw(layer.img, -layer.scroll + (i * layer.img:getWidth()), 0)
-		end
-	end
-
+  bg:draw()
 	gStateMachine:render()
-
-	displayFPS()
-
 	push:apply("end")
-end
-
-function _G.displayFPS()
-	-- simple FPS display across all states
-	love.graphics.setFont(gFonts["small"])
-	love.graphics.setColor(0, 1, 0, 1)
-	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 5, 5)
 end
 
 function love.resize(w, h)

@@ -6,9 +6,9 @@ function love.load()
 	love.window.setTitle("Dino")
 
 	_G.gFonts = {
-		["small"] = love.graphics.newFont("assets/fonts/font.ttf", 8),
-		["medium"] = love.graphics.newFont("assets/fonts/font.ttf", 16),
-		["large"] = love.graphics.newFont("assets/fonts/font.ttf", 32),
+		["small"] = love.graphics.newFont("assets/fonts/alagard.ttf",8),
+		["medium"] = love.graphics.newFont("assets/fonts/alagard.ttf", 16),
+		["large"] = love.graphics.newFont("assets/fonts/alagard.ttf", 32),
 	}
 	love.graphics.setFont(gFonts["small"])
 

@@ -1,5 +1,7 @@
 require("src/Dependencies")
 
+DEBUG = false
+
 function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	math.randomseed(os.time())
@@ -30,6 +32,12 @@ function love.load()
 		["stump"] = love.graphics.newImage("assets/graphics/stump.png"),
 	}
 
+	_G.gSounds = {
+		["explosion"] = love.audio.newSource("assets/sounds/explosion.wav", "static"),
+		["hurt"] = love.audio.newSource("assets/sounds/hurt.wav", "static"),
+		["jump"] = love.audio.newSource("assets/sounds/jump.wav", "static"),
+	}
+
 	_G.bg = BgPlx()
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -46,6 +54,9 @@ function love.load()
 		end,
 		["play"] = function()
 			return PlayState()
+		end,
+		["score"] = function()
+			return ScoreState()
 		end,
 	})
 
@@ -72,6 +83,14 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
+	if key == "q" then
+		DEBUG = not (DEBUG and true)
+	end
+
+	if key == "escape" then
+		love.event.quit()
+	end
+
 	love.keyboard.keysPressed[key] = true
 end
 

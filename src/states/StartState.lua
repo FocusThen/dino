@@ -5,9 +5,6 @@ function StartState:update(_)
       gStateMachine:change("play")
 	end
 
-	if love.keyboard.wasPressed("escape") then
-		love.event.quit()
-	end
 end
 
 function StartState:render()

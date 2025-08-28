@@ -40,6 +40,10 @@ function love.load()
 
 	_G.bg = BgPlx()
 
+  local data = {score = 0}
+  local saveGame = Serialize(data)
+  love.filesystem.write("./data.txt", saveGame)
+
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
 		resizable = true,

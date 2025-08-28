@@ -12,7 +12,7 @@ function BgPlx:init(state)
 		{ img = gTextures["bg_plx-3"], speed = 40, scroll = 0 },
 		{ img = gTextures["bg_plx-4"], speed = 60, scroll = 0 },
 		{ img = gTextures["bg_plx-5"], speed = 120, scroll = 0 },
-		{ name = "ground", img = gTextures["ground"], speed = 140, scroll = 0 },
+		{ name = "ground", img = gTextures["ground"], speed = 150, scroll = 0 },
 	}
 end
 

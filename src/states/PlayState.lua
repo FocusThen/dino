@@ -1,16 +1,18 @@
 PlayState = Class({ __includes = BaseState })
 
-function PlayState:init()
+function PlayState:init(highScore)
 	bg.state = "play"
 	self.player = Dino()
 	self.timer = 0
 	self.score = 0
+	self.highScore = highScore or 0
 
 	self.obstacles = {}
 end
 
 function PlayState:update(dt)
 	self.timer = self.timer + dt
+	self.score = self.score + 1
 
 	if self.timer > 2 then
 		table.insert(self.obstacles, Rock())
@@ -36,7 +38,7 @@ function PlayState:update(dt)
 		if self.player:collides(obstacle) then
 			gSounds["explosion"]:play()
 			gSounds["hurt"]:play()
-      bg.state = "stop"
+			bg.state = "stop"
 
 			gStateMachine:change("score", {
 				score = self.score,
@@ -52,6 +54,7 @@ function PlayState:render()
 
 	love.graphics.setFont(gFonts["medium"])
 	love.graphics.print("Score: " .. tostring(self.score), 8, 8)
+	love.graphics.print(tostring(self.highScore) .. " :High Score", VIRTUAL_WIDTH - 100, 8)
 
 	self.player:render()
 end

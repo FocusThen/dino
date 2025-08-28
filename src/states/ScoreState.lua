@@ -2,6 +2,12 @@ ScoreState = Class({ __includes = BaseState })
 
 function ScoreState:enter(params)
 	self.score = params.score
+
+  if self.score > save:get("score") then
+    save:set("score", self.score)
+    save:save()
+  end
+
 end
 
 function ScoreState:update(_)

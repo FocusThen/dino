@@ -5,6 +5,7 @@ _G.Serialize = require("lib/knife/serialize")
 require("src/constants")
 require("src/StateMachine")
 require("src/Animation")
+require("src/Save")
 require("src/Util")
 
 require("src/entities/Background")

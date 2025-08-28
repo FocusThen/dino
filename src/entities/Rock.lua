@@ -13,9 +13,9 @@ end
 
 function Rock:update(dt)
 	if self.x > -self.width then
-    self.x = self.x - self.speed * dt
-  else
-    self.remove = true
+	   self.x = self.x - self.speed * dt
+	 else
+	   self.remove = true
 	end
 end
 

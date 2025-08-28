@@ -1,11 +1,11 @@
 PlayState = Class({ __includes = BaseState })
 
-function PlayState:init(highScore)
+function PlayState:init()
 	bg.state = "play"
 	self.player = Dino()
 	self.timer = 0
 	self.score = 0
-	self.highScore = highScore or 0
+	self.highScore = save:get("score")
 
 	self.obstacles = {}
 end

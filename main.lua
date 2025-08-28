@@ -2,6 +2,11 @@ require("src/Dependencies")
 
 DEBUG = false
 
+-- TODO: Make Highscore and Save and Load
+-- TODO: Make Bird
+-- TODO: Make Barrel
+-- TODO: Make Stump
+
 function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	math.randomseed(os.time())
@@ -40,9 +45,9 @@ function love.load()
 
 	_G.bg = BgPlx()
 
-  local data = {score = 0}
-  local saveGame = Serialize(data)
-  love.filesystem.write("./data.txt", saveGame)
+	local data = { score = 0 }
+	local saveGame = Serialize(data)
+	love.filesystem.write("./data.txt", saveGame)
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,

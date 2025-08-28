@@ -54,7 +54,11 @@ function PlayState:render()
 
 	love.graphics.setFont(gFonts["medium"])
 	love.graphics.print("Score: " .. tostring(self.score), 8, 8)
-	love.graphics.print(tostring(self.highScore) .. " :High Score", VIRTUAL_WIDTH - 100, 8)
+	love.graphics.print(
+		"High Score: " .. tostring(self.highScore),
+		VIRTUAL_WIDTH - (100 + #tostring(self.highScore) * 6),
+		8
+	)
 
 	self.player:render()
 end

@@ -3,12 +3,15 @@ Dino = Class({})
 local GRAVITY = 20
 local SCALE = 3
 local DINO_GROUND = GROUND - 60
+local DINO_HEIGHT = 30
+local DINO_WIDTH = 30
+local DINO_CROUCH_HEIGHT = DINO_HEIGHT + 30
 
 function Dino:init()
 	self.image = gTextures["player"]
 	self.quads = GenerateQuads(self.image, 24, 21)
-	self.width = 30
-	self.height = 40
+	self.width = DINO_WIDTH
+	self.height = DINO_HEIGHT
 	self.isGround = false
 
 	self.animations = {
@@ -39,7 +42,7 @@ function Dino:update(dt)
 	self.dy = self.dy + GRAVITY * dt
 
 	if love.keyboard.wasPressed("space") and self.isGround then
-    gSounds["jump"]:play()
+		gSounds["jump"]:play()
 		self.currentAnim = self.animations.jump
 		self.dy = -8
 	end
@@ -49,8 +52,10 @@ function Dino:update(dt)
 
 	if self.y >= DINO_GROUND then
 		if love.keyboard.isDown("down") then
+			self.height = DINO_CROUCH_HEIGHT
 			self.currentAnim = self.animations.crouchRun
 		else
+			self.height = DINO_HEIGHT
 			self.currentAnim = self.animations.run
 		end
 		self.y = DINO_GROUND

@@ -57,7 +57,7 @@ function Dino:update(dt)
 	self.isGround = false
 
 	if self.y >= DINO_GROUND then
-		if love.keyboard.isDown("down") then
+		if love.keyboard.isDown("s") then
 			self.currentAnim = self.animations.crouchRun
       self.isCrouching = true
 		else

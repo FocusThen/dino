@@ -11,6 +11,7 @@ require("src/Util")
 require("src/entities/Background")
 require("src/entities/Dino")
 require("src/entities/Rock")
+require("src/entities/Bird")
 
 require("src/states/BaseState")
 require("src/states/StartState")

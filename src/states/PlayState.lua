@@ -3,20 +3,36 @@ PlayState = Class({ __includes = BaseState })
 function PlayState:init()
 	bg.state = "play"
 	self.player = Dino()
-	self.timer = 0
 	self.score = 0
 	self.highScore = save:get("score")
+
+	-- FIX: Bird and rock rendering same time
+	self.objects = {
+		{
+			entity = Bird,
+			timer = 0,
+			delay = math.random(3, 5),
+		},
+		{
+			entity = Rock,
+			timer = 0,
+			delay = math.random(1, 2),
+		},
+	}
 
 	self.obstacles = {}
 end
 
 function PlayState:update(dt)
-	self.timer = self.timer + dt
 	self.score = self.score + 1
 
-	if self.timer > 2 then
-		table.insert(self.obstacles, Rock())
-		self.timer = 0
+	for _, object in pairs(self.objects) do
+		object.timer = object.timer + dt
+
+		if object.timer > object.delay then
+			table.insert(self.obstacles, object.entity())
+			object.timer = 0
+		end
 	end
 
 	-- update obstacles

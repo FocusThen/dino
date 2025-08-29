@@ -2,7 +2,6 @@ require("src/Dependencies")
 
 DEBUG = false
 
--- TODO: Make Bird
 -- TODO: Make Barrel
 -- TODO: Make Stump
 
@@ -44,8 +43,8 @@ function love.load()
 
 	_G.bg = BgPlx()
 
-  _G.save = Save({ score = 0 })
-  save:load()
+	_G.save = Save({ score = 0 })
+	save:load()
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,

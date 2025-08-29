@@ -3,20 +3,26 @@ PlayState = Class({ __includes = BaseState })
 function PlayState:init()
 	bg.state = "play"
 	self.player = Dino()
-  self.timer = 0
+	self.timer = 0
 	self.score = 0
 	self.highScore = save:get("score")
 
 	self.objects = {
 		{
-      id = 1,
-			name = "bird",
+			id = 1,
 			entity = Bird,
 		},
 		{
-      id = 2,
-			name = "rock",
+			id = 2,
 			entity = Rock,
+		},
+		{
+			id = 3,
+			entity = Barrel,
+		},
+		{
+			id = 4,
+			entity = Stump,
 		},
 	}
 
@@ -24,15 +30,13 @@ function PlayState:init()
 end
 
 function PlayState:update(dt)
-  self.timer = self.timer + dt
+	self.timer = self.timer + dt
 	self.score = self.score + 1
 
-
-  if self.timer > 2 then
-    table.insert(self.obstacles, self.objects[math.random(1, 2)].entity())
-    self.timer = 0
-  end
-
+	if self.timer > 1 then
+		table.insert(self.obstacles, self.objects[math.random(1, 4)].entity())
+		self.timer = 0
+	end
 
 	-- update obstacles
 	for _, obstacle in pairs(self.obstacles) do

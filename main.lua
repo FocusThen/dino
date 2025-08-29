@@ -2,9 +2,6 @@ require("src/Dependencies")
 
 DEBUG = false
 
--- TODO: Make Barrel
--- TODO: Make Stump
-
 function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	math.randomseed(os.time())
